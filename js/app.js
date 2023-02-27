@@ -9,6 +9,18 @@ const displayPhone = (phones) => {
 	const phonesContainer = document.getElementById("phones-container");
 	phonesContainer.innerHTML = "";
 
+	// Display 20 Phones Only
+	phones = phones.slice(0, 20);
+
+	//Display no Phone
+	const noPhone = document.getElementById("text-warning");
+	if (phones.length == 0) {
+		noPhone.classList.remove("d-none");
+	} else {
+		noPhone.classList.add("d-none");
+	}
+
+	// Display Phone
 	phones.forEach((phone) => {
 		console.log(phone);
 		const phoneCard = document.createElement("div");
