@@ -38,11 +38,22 @@ const displayPhone = (phones) => {
         `;
 		phonesContainer.appendChild(phoneCard);
 	});
+	toggleSpinner(false);
 };
 
 loadPhone("iphone");
 
 const searchPhone = () => {
+	toggleSpinner(true);
 	const search = document.getElementById("input-phone").value;
 	loadPhone(search);
+};
+
+const toggleSpinner = (isLoading) => {
+	const loaderSection = document.getElementById("loader");
+	if (isLoading) {
+		loaderSection.classList.remove("d-none");
+	} else {
+		loaderSection.classList.add("d-none");
+	}
 };
