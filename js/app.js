@@ -28,19 +28,18 @@ const displayPhone = (phones, dataLimit) => {
 
 	// Display Phone
 	phones.forEach((phone) => {
-		console.log(phone);
 		const phoneCard = document.createElement("div");
 		phoneCard.classList.add("col");
 		phoneCard.innerHTML = `
         <div class="card h-100 p-4">
         <img src="${phone.image}" class="card-img-top" alt="...">
-        <div class="card-body">
+            <div class="card-body">
             <h5 class="card-title">${phone.phone_name}</h5>
             <p class="card-text">This is a longer card with supporting text below as a natural
                 lead-in to additional
                 content. This content is a little bit longer.</p>
-				  <button href="#" onclick="loadPhoneDetails('${phone.slug}')" class="btn btn-primary">Show Details</button>
-        </div>
+				  <button href="#" onclick="loadPhoneDetails('${phone.slug}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showPhoneDetails">Show Details</button>
+            </div>
         </div>
         `;
 		phonesContainer.appendChild(phoneCard);
@@ -82,4 +81,34 @@ const loadPhoneDetails = async (id) => {
 	const res = await fetch(url);
 	const data = await res.json();
 	console.log(data);
+
+	const title = document.getElementById("showPhoneDetailsLabel");
+	title.innerText = `${data.data.slug}`;
+	const bodyContainer = document.getElementById("modal-body");
+	const body = document.createElement("div");
+	body.innerHTML = `
+	<img src="${data.data.image}" class="img-fluid text-center" alt="...">
+	<h5 class="mt-3">About Phone:</h5>
+	<p>Brand: ${data.data.brand}</p>
+	<p>Release Date: ${
+		data.data.releaseDate ? data.data.releaseDate : "No release date found"
+	}</p>
+	<h5>Main Features:</h5>
+	<p>Storage: ${
+		data.data.mainFeatures.storage
+			? data.data.mainFeatures.storage
+			: "No info found"
+	}</p>
+	<p>Memory: ${
+		data.data.mainFeatures.memory
+			? data.data.mainFeatures.memory
+			: "No info found"
+	}</p>
+	<p>Display Size: ${
+		data.data.mainFeatures.displaySize
+			? data.data.mainFeatures.displaySize
+			: "No info found"
+	}</p>
+	`;
+	bodyContainer.appendChild(body);
 };
